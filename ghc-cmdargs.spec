@@ -5,13 +5,13 @@
 %define		pkgname	cmdargs
 Summary:	Command line argument processing
 Name:		ghc-%{pkgname}
-Version:	0.10.14
+Version:	0.10.20
 Release:	1
 License:	BSD
 Group:		Development/Languages
 #Source0Download: http://hackage.haskell.org/package/cmdargs
 Source0:	http://hackage.haskell.org/package/%{pkgname}-%{version}/%{pkgname}-%{version}.tar.gz
-# Source0-md5:	ebc50066c2d38a0ad0f2a446acfea1cd
+# Source0-md5:	744e15b86ef774ed06af4e37a565f36b
 URL:		http://hackage.haskell.org/package/cmdargs
 BuildRequires:	ghc >= 6.12.3
 BuildRequires:	ghc-base >= 4.4
@@ -107,27 +107,34 @@ rm -rf $RPM_BUILD_ROOT
 %doc %{name}-%{version}-doc/*
 %{_libdir}/%{ghcdir}/package.conf.d/%{pkgname}.conf
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}
-%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/HScmdargs-%{version}.o
-%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHScmdargs-%{version}.a
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHScmdargs-%{version}-*.so
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHScmdargs-%{version}-*.a
+%exclude %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHScmdargs-%{version}-*_p.a
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Data
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Data/Generics
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Data/Generics/*.hi
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Data/Generics/*.dyn_hi
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Data/Generics/Any
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Data/Generics/Any/*.hi
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Data/Generics/Any/*.dyn_hi
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/System
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/System/Console
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/System/Console/*.hi
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/System/Console/*.dyn_hi
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/System/Console/CmdArgs
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/System/Console/CmdArgs/*.hi
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/System/Console/CmdArgs/*.dyn_hi
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/System/Console/CmdArgs/Implicit
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/System/Console/CmdArgs/Implicit/*.hi
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/System/Console/CmdArgs/Implicit/*.dyn_hi
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/System/Console/CmdArgs/Explicit
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/System/Console/CmdArgs/Explicit/*.hi
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/System/Console/CmdArgs/Explicit/*.dyn_hi
 
 %if %{with prof}
 %files prof
 %defattr(644,root,root,755)
-%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHScmdargs-%{version}_p.a
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHScmdargs-%{version}-*_p.a
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Data/Generics/*.p_hi
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Data/Generics/Any/*.p_hi
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/System/Console/*.p_hi
