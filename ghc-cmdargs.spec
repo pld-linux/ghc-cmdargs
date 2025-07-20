@@ -4,6 +4,7 @@
 #
 %define		pkgname	cmdargs
 Summary:	Command line argument processing
+Summary(pl.UTF-8):	Przetwarzanie argumentów linii poleceń
 Name:		ghc-%{pkgname}
 Version:	0.10.20
 Release:	2
@@ -13,18 +14,21 @@ Group:		Development/Languages
 Source0:	http://hackage.haskell.org/package/%{pkgname}-%{version}/%{pkgname}-%{version}.tar.gz
 # Source0-md5:	744e15b86ef774ed06af4e37a565f36b
 URL:		http://hackage.haskell.org/package/cmdargs
-BuildRequires:	ghc >= 6.12.3
+# ghc < 8.0 requires also ghc-semigroups >=0.18
+BuildRequires:	ghc >= 8.0
 BuildRequires:	ghc-base >= 4.4
 BuildRequires:	ghc-base < 5
 BuildRequires:	ghc-filepath
 BuildRequires:	ghc-process >= 1.0
+BuildRequires:	ghc-template-haskell
 BuildRequires:	ghc-transformers >= 0.2
 %if %{with prof}
-BuildRequires:	ghc-prof >= 6.12.3
+BuildRequires:	ghc-prof >= 7.2.1
 BuildRequires:	ghc-base-prof >= 4.4
 BuildRequires:	ghc-base-prof < 5
 BuildRequires:	ghc-filepath-prof
 BuildRequires:	ghc-process-prof >= 1.0
+BuildRequires:	ghc-template-haskell-prof
 BuildRequires:	ghc-transformers-prof >= 0.2
 %endif
 BuildRequires:	rpmbuild(macros) >= 1.608
@@ -34,6 +38,7 @@ Requires:	ghc-base >= 4.4
 Requires:	ghc-base < 5
 Requires:	ghc-filepath
 Requires:	ghc-process >= 1.0
+Requires:	ghc-template-haskell
 Requires:	ghc-transformers >= 0.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -46,6 +51,10 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 This library provides an easy way to define command line parsers.
 
+%description -l pl.UTF-8
+Ta biblioteka udostępnia łatwy sposób definiowania analizatorów linii
+poleceń.
+
 %package prof
 Summary:	Profiling %{pkgname} library for GHC
 Summary(pl.UTF-8):	Biblioteka profilująca %{pkgname} dla GHC
@@ -55,6 +64,7 @@ Requires:	ghc-base-prof >= 4.4
 Requires:	ghc-base-prof < 5
 Requires:	ghc-filepath-prof
 Requires:	ghc-process-prof >= 1.0
+Requires:	ghc-template-haskell-prof
 Requires:	ghc-transformers-prof >= 0.2
 
 %description prof
@@ -104,10 +114,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc %{name}-%{version}-doc/*
+%doc CHANGES.txt README.md %{name}-%{version}-doc/*
 %{_libdir}/%{ghcdir}/package.conf.d/%{pkgname}.conf
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}
-%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHScmdargs-%{version}-*.so
+%attr(755,root,root) %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHScmdargs-%{version}-*.so
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHScmdargs-%{version}-*.a
 %exclude %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHScmdargs-%{version}-*_p.a
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Data
